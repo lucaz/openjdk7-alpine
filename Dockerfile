@@ -20,5 +20,11 @@ RUN apk add --no-cache --update git bash && \
     curl -sL "https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local --strip-components=1 && \
     echo -ne "- with sbt $SBT_VERSION\n" >> /root/.built
 
+# Install aws-cli
+RUN apk -Uuv add groff less python py-pip
+RUN pip install --upgrade pip
+RUN pip install awscli
+RUN apk --purge -v del py-pip
+RUN rm /var/cache/apk/*
 
 CMD ["/usr/bin/java", "-version"]
